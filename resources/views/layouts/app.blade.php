@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initialscale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Simple Laravel 11 CRUD Application Tutorial</title>
+ <link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.
+min.css">
+ <link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrapicons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+ <div class="container">
+ <h3 class=" mt-3">Simple Laravel 11 CRUD Application
+Tutorial</h3>
+ @yield('content')
+ <div class="row justify-content-center text-center mt-3">
+ <div class="col-md-12">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+ <!-- Example navbar in layouts/app.blade.php -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">GKCFaithLink</a>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+        <div class="d-flex ms-auto">
+            @auth
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            @endauth
         </div>
-    </body>
+    </div>
+</nav>
+
+<p>
+Return to Website: <a
+href="https://www.usjr.edu.ph/"><strong>University of San Jose -
+Recoletos</strong></a>
+</p>
+
+ </div>
+ </div>
+ </div>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bu
+ndle.min.js"></script>
+</body>
 </html>

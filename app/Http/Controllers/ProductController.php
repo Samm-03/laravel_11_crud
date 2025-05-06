@@ -26,7 +26,7 @@ class ProductController extends Controller
  /**
  * Store a newly created resource in storage.
  */
- public function store(StoreProductRequest $request) : 
+ public function store(StoreProductRequest $request) :
 RedirectResponse
  {
  Product::create($request->validated());
@@ -65,5 +65,5 @@ $product) : RedirectResponse
  $product->delete();
  return redirect()->route('products.index')
  ->withSuccess('Product is deleted successfully.');
-     }
+ }
 }

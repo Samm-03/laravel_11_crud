@@ -18,4 +18,6 @@ class AppServiceProvider extends ServiceProvider
  {
  Paginator::useBootstrapFive();
  }
+ public const HOME = '/dashboard';
+
 }
