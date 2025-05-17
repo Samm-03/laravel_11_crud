@@ -5,6 +5,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+
 class ProductController extends Controller
 {
  /**
@@ -26,13 +28,24 @@ class ProductController extends Controller
  /**
  * Store a newly created resource in storage.
  */
- public function store(StoreProductRequest $request) :
-RedirectResponse
- {
- Product::create($request->validated());
- return redirect()->route('products.index')
- ->withSuccess('New product is added successfully.');
- }
+public function store(StoreProductRequest $request): RedirectResponse
+{
+    // Get all validated data from the form request
+    $data = $request->validated();
+
+    // If an image is uploaded, store it in storage/app/public/product_images
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('product_images', 'public');
+        $data['image'] = $imagePath;
+    }
+
+    // Create the product with the data (including image path)
+    Product::create($data);
+
+    return redirect()->route('products.index')
+        ->withSuccess('New product is added successfully.');
+}
+
  /**
  * Display the specified resource.
  */
@@ -50,13 +63,32 @@ RedirectResponse
  /**
  * Update the specified resource in storage.
  */
- public function update(UpdateProductRequest $request, Product
-$product) : RedirectResponse
- {
- $product->update($request->validated());
- return redirect()->back()
- ->withSuccess('Product is updated successfully.');
- }
+public function update(UpdateProductRequest $request, Product $product): RedirectResponse
+{
+    // Get all validated data from the request
+    $data = $request->validated();
+
+    // Check if a new image has been uploaded
+    if ($request->hasFile('image')) {
+        // Delete the old image from storage if it exists
+        if ($product->image) {
+            Storage::disk('public')->delete('product_images/' . $product->image);
+        }
+
+        // Store the new image
+        $imagePath = $request->file('image')->store('product_images', 'public');
+        $data['image'] = basename($imagePath);  // Store only the image filename in the database
+    }
+
+    // Update the product with the new data (including image if uploaded)
+    $product->update($data);
+
+    // Return with a success message
+    return redirect()->route('products.index')
+        ->withSuccess('Product is updated successfully.');
+}
+
+
  /**
  * Remove the specified resource from storage.
  */

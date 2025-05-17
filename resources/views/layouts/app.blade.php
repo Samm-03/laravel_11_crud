@@ -23,8 +23,7 @@ Tutorial</h3>
  <!-- Example navbar in layouts/app.blade.php -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">GKCFaithLink</a>
-
+       
         <div class="d-flex ms-auto">
             @auth
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">

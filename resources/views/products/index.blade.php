@@ -21,6 +21,7 @@ Product</a>
  <th scope="col">Name</th>
  <th scope="col">Quantity</th>
  <th scope="col">Price</th>
+ <th scope="col">Image</th> {{-- ✅ New --}}
  <th scope="col">Action</th>
  </tr>
  </thead>
@@ -33,6 +34,15 @@ Product</a>
  <td>{{ $product->name }}</td>
  <td>{{ $product->quantity }}</td>
  <td>{{ $product->price }}</td>
+
+ <td>
+     @if($product->image)
+         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="80">
+     @else
+         <span class="text-muted">No Image</span>
+     @endif
+ </td>
+
  <td>
  <form action="{{ route('products.destroy', $product->id) }}" method="post">
     @csrf
@@ -44,7 +54,7 @@ Product</a>
  </td>
  </tr>
 @empty
- <td colspan="6">
+ <td colspan="7"> {{-- Updated colspan to match new column --}}
  <span class="text-danger">
  <strong>No Product Found!</strong>
  </span>
